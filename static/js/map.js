@@ -19,7 +19,7 @@ function map(data, area_map_json){
 
   //initialize zoom
   var zoom = d3.zoom()
-    .scaleExtent([1, 10])
+    .scaleExtent([1, 20])
     .on('zoom', move);
 
   //initialize tooltip
@@ -30,8 +30,8 @@ function map(data, area_map_json){
 
   /*~~ Task 11  initialize projection and path variable ~~*/
   var projection = d3.geoMercator()
-	  .scale(120)
-	  .translate([width/2,height/2]);
+	  .scale(1400)
+	  .translate([width/2,height*3.8]);
 	  
   var path = d3.geoPath()
 	  .projection(projection);
@@ -45,23 +45,22 @@ function map(data, area_map_json){
 	
 	console.log(area_map_json);
 	
-	// constructing map must be done using GEOjson instead of 
-	// topojson like it is right now.
-  var countries = topojson.feature(area_map_json,
+	// Collection corresponds to the first object in topojson file
+  var areas = topojson.feature(area_map_json,
         area_map_json.objects.collection).features;
 	
 	//console.log(area_map_json);
 
-  var country = g.selectAll(".country").data(countries);
-  console.log(country);
+  var area = g.selectAll(".area").data(areas);
+  console.log(area);
 
   /*~~ Task 12  initialize color array ~~*/
   var cc = [];
   //console.log(data);
   data.forEach(function(element, index, array) { cc[element.Country] = color(index); });
 
-  country.enter().insert("path")
-      .attr("class", "country")
+  area.enter().insert("path")
+      .attr("class", "area")
 
         /*~~ Task 11  add path variable as attr d here. ~~*/
 	  .attr("d", path)

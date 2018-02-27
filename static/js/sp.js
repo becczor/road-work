@@ -5,6 +5,8 @@
 
 function sp(data){
 
+	console.log(data);
+	
     this.data = data;
     var div = '#scatter-plot';
 	
@@ -28,9 +30,9 @@ function sp(data){
       Initialize 4 (x,y,country,circle-size)
       variables and assign different data attributes from the data filter
       Then use domain() and extent to scale the axes*/
-	var xValue = 'Student_skills';
-	var yValue = 'Water_quality';
-	var radius = 'Life_satisfaction';
+	var xValue = 'Day_of_Week';
+	var yValue = 'Speed_limit';
+	var radius = 'Accident_Severity';
 
 	
 	/*x and y domain code here, based on values from data*/
@@ -44,7 +46,7 @@ function sp(data){
 	var xAxis = d3.axisBottom(x);
 	var yAxis = d3.axisLeft(y);
 	
-	var cValue = function(d) { return d.Country;};
+	var cValue = function(d) { return d.Accident_Index;};
     var color = d3.scaleOrdinal(d3.schemeCategory20b);
 
 
@@ -65,7 +67,7 @@ function sp(data){
 		.attr("class", "label")
 		.attr("transform", "translate(" + (width/2) + " ," + (height + margin.top + 20) + ")")
 		.style("text-anchor", "middle")
-		.text("Student Skills");
+		.text("Day of week");
 		
 		svg.append("g")
 		.attr("class", "axis")
@@ -74,7 +76,7 @@ function sp(data){
 		svg.append("text")
 		.attr("class", "label")
 		.style("text-anchor", "start")
-		.text("Water quality");
+		.text("Speed limit");
 
         /* ~~ Task 4 Add the scatter dots. ~~ */
 		
@@ -152,7 +154,7 @@ function sp(data){
 			 
 			 dots.style("stroke", function(d){
 				 return value.every(function(c) { 
-					return c.Country != d.Country ? "black" : null;
+					return c.Accident_Index != d.Accident_Index ? "black" : null;
 				 } ) ? null : "black";
 			  } )
 			  .style("stroke-width", 7) 
