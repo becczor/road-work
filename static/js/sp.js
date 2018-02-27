@@ -5,7 +5,7 @@
 
 function sp(data){
 
-	console.log(data);
+	//console.log(data);
 	
     this.data = data;
     var div = '#scatter-plot';
@@ -31,7 +31,8 @@ function sp(data){
       variables and assign different data attributes from the data filter
       Then use domain() and extent to scale the axes*/
 	var xValue = 'Day_of_Week';
-	var yValue = 'Speed_limit';
+	//var yValue = 'Speed_limit';
+	var yValue = '1st_Road_Number';
 	var radius = 'Accident_Severity';
 
 	
@@ -88,7 +89,7 @@ function sp(data){
 		.enter().append("circle")
 		.attr("class", "circles")
 		.attr("r", function(d){
-			return d[radius]/10;
+			return d[radius]*3;
 		})
 		
 		.attr("cx", function(d){

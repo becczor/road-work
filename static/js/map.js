@@ -15,7 +15,7 @@ function map(data, area_map_json){
 
   /*~~ Task 10  initialize color variable ~~*/
   var color = d3.scaleOrdinal(d3.schemeCategory20b);
-  var cValue = function(d) { return d.Country;};
+  var cValue = function(d) { return d.Accident_Severity;};
 
   //initialize zoom
   var zoom = d3.zoom()
