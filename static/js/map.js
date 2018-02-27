@@ -47,7 +47,7 @@ function map(data, area_map_json){
 
     // Collection corresponds to the first object in topojson file
     var areas = topojson.feature(area_map_json,
-        area_map_json.objects.collection).features;
+        area_map_json.objects.Local_Authority_Districts_Dec_2016).features;
 
     //console.log(area_map_json);
 
