@@ -2,10 +2,10 @@
   Created: Jan 14 2018
   Author: Kahin Akram Hassan
 */
-function map(data, world_map_json){
+function map(data, area_map_json){
 
   this.data = data;
-  this.world_map_json = world_map_json;
+  this.area_map_json = area_map_json;
 
   var div = '#world-map';
   var parentWidth = $(div).parent().width();
@@ -43,14 +43,17 @@ function map(data, world_map_json){
 
   var g = svg.append("g");
 	
-	console.log(world_map_json);
+	console.log(area_map_json);
 	
 	// constructing map must be done using GEOjson instead of 
 	// topojson like it is right now.
-  var countries = topojson.feature(world_map_json,
-        world_map_json.objects.countries).features;
+  var countries = topojson.feature(area_map_json,
+        area_map_json.objects.collection).features;
+	
+	//console.log(area_map_json);
 
   var country = g.selectAll(".country").data(countries);
+  console.log(country);
 
   /*~~ Task 12  initialize color array ~~*/
   var cc = [];
