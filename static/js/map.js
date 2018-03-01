@@ -18,7 +18,7 @@ function map(data, area_map_json){
 
     //initialize zoom
     var zoom = d3.zoom()
-        .scaleExtent([1, 20])
+        .scaleExtent([1, 30])
         .on('zoom', move);
 
     //initialize tooltip
@@ -42,16 +42,44 @@ function map(data, area_map_json){
 
     var g = svg.append("g");
 
-    console.log(area_map_json);
+    //console.log(area_map_json);
 
     // Collection corresponds to the first object in topojson file
     var areas = topojson.feature(area_map_json,
         area_map_json.objects.Local_Authority_Districts_Dec_2016).features;
 
-    //console.log(area_map_json);
+    var geoAccidents = {type: "FeatureCollection", features: geoFormat(data)};
+
+    console.log(data);
+    //Formats the data in a feature collection
+    function geoFormat(array) {
+        var data = [];
+
+        array.map(function (d, i) {
+            data.push({
+                index: d.Accident_Index,
+                type: "Feature",
+                geometry: {
+                    coordinates: [d.Longitude, d.Latitude],
+                    type: "Point"
+                },
+                no_of_vehicles: d.Number_of_Vehicles,
+                year: d.Year,
+                date: d.Date,
+                time: d.Time,
+                lad: d["Local_Authority_(District)"],
+                day_of_week: d.Day_of_Week,
+                speed_limit: d.Speed_limit,
+                accident_severity: d.Accident_Severity
+
+            });
+        });
+        return data;
+    }
+
+    console.log(geoAccidents);
 
     var area = g.selectAll(".area").data(areas);
-    console.log(area);
 
     /*~~ Task 12  initialize color array ~~*/
     var cc = [];
@@ -97,6 +125,34 @@ function map(data, area_map_json){
             sp.selectDots([found]);
             /*~~ call the other graphs method for selection here ~~*/
         });
+
+    drawPoints();
+
+
+    function drawPoints(){
+        console.log(geoAccidents.features);
+        var point = g.selectAll(".point").data(geoAccidents.features);
+        point.enter().append("path")
+            .attr("class", "point")
+            .attr("d", path)
+            .attr("d", path.pointRadius(function (d) {
+                return d.accident_severity / 10;
+            }))
+            .style("opacity", 0.1)
+            .on("mousemove", function (d) {
+                //var cur_mag = d3.select("#slider").property("value");
+                d3.select(this)
+                    .style('opacity',1.0)
+                    .style("stroke", 'red')
+                //printInfo(d);
+            })
+            .on('mouseout',function(d){
+                d3.select(this)
+                    .style('opacity', 0.1)
+                    .style("stroke", 'none');
+
+            });
+    }
 
     function move() {
         g.style("stroke-width", 1.5 / d3.event.transform.k + "px");

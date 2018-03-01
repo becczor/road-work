@@ -77,7 +77,7 @@ function sp(data){
     svg.append("text")
         .attr("class", "label")
         .style("text-anchor", "start")
-        .text("Speed limit");
+        .text("1st Road Number");
 
     /* ~~ Task 4 Add the scatter dots. ~~ */
 
