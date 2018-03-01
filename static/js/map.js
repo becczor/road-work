@@ -7,6 +7,8 @@ function map(data, area_map_json){
     this.data = data;
     this.area_map_json = area_map_json;
 
+
+
     var div = '#world-map';
     var parentWidth = $(div).parent().width();
     var margin = {top: 0, right: 0, bottom: 0, left: 0},
@@ -42,15 +44,14 @@ function map(data, area_map_json){
 
     var g = svg.append("g");
 
-    //console.log(area_map_json);
-
     // Collection corresponds to the first object in topojson file
     var areas = topojson.feature(area_map_json,
         area_map_json.objects.Local_Authority_Districts_Dec_2016).features;
 
     var geoAccidents = {type: "FeatureCollection", features: geoFormat(data)};
 
-    console.log(data);
+    console.log("Areas:");
+    console.log(areas);
     //Formats the data in a feature collection
     function geoFormat(array) {
         var data = [];
@@ -77,13 +78,14 @@ function map(data, area_map_json){
         return data;
     }
 
+    console.log("GeoAccidents:");
     console.log(geoAccidents);
 
     var area = g.selectAll(".area").data(areas);
 
     /*~~ Task 12  initialize color array ~~*/
     var cc = [];
-    //console.log(data);
+
     data.forEach(function(element, index, array) { cc[element.Country] = color(index); });
 
     area.enter().insert("path")
@@ -117,20 +119,20 @@ function map(data, area_map_json){
         })
 
         //selection
-        .on("click",  function(d) {
-            //
+        /*.on("click",  function(d) {
+            console.log(d);
             var found = data.find(function(element) {
+                console.log(element);
                 return element.Country === d.properties.name;
             });
             sp.selectDots([found]);
-            /*~~ call the other graphs method for selection here ~~*/
-        });
+            /*~~ call the other graphs method for selection here ~~
+        });*/
 
     drawPoints();
 
 
     function drawPoints(){
-        console.log(geoAccidents.features);
         var point = g.selectAll(".point").data(geoAccidents.features);
         point.enter().append("path")
             .attr("class", "point")
@@ -151,6 +153,15 @@ function map(data, area_map_json){
                     .style('opacity', 0.1)
                     .style("stroke", 'none');
 
+            })
+            .on("click",  function(d) {
+                console.log(d); // Feature collection of accident data
+                var found = data.find(function(element) {
+                    console.log(element); // Element in actual data
+                    return element.Accident_Index === d.index;
+                });
+                sp.selectDots([found]);
+                /*~~ call the other graphs method for selection here ~~*/
             });
     }
 
