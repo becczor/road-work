@@ -15,7 +15,6 @@ function map(data, area_map_json){
 
     /*~~ Task 10  initialize color variable ~~*/
     var color = d3.scaleOrdinal(d3.schemeCategory20b);
-    var cValue = function(d) { return d.Accident_Severity;};
 
     //initialize zoom
     var zoom = d3.zoom()
@@ -67,10 +66,6 @@ function map(data, area_map_json){
         .attr("id", function(d) { return d.id; })
         .attr("title", function(d) { return d.properties.name; })
         .style("fill", function(d) { return cc[d.properties.name]; })
-        // QUESTION: What is properties? If we take i as index we get colors on the wrong countries.
-        //.style("fill", function(d,i) { return cc[i]; })
-        //.style("fill", function(d) { return color(cValue(d));})
-        //.style("fill", function(d) { return color(cValue(d.properties.name));})
 
         //tooltip
         .on("mousemove", function(d) {
@@ -81,8 +76,9 @@ function map(data, area_map_json){
                 .style("opacity", .9);
             var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
             tooltip
+            // TODO: Make tooltip box big enough for the text.
                 .attr("style", "left:"+(mouse[0]+30)+"px;top:"+(mouse[1]+30)+"px")
-                .html(d.properties.name);
+                .html(d.properties.lad16nm);
         })
         .on("mouseout",  function(d) {
 
