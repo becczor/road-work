@@ -50,8 +50,8 @@ function map(data, area_map_json){
 
     var geoAccidents = {type: "FeatureCollection", features: geoFormat(data)};
 
-    console.log("Areas:");
-    console.log(areas);
+    //console.log("Areas:");
+    //console.log(areas);
     //Formats the data in a feature collection
     function geoFormat(array) {
         var data = [];
@@ -78,8 +78,8 @@ function map(data, area_map_json){
         return data;
     }
 
-    console.log("GeoAccidents:");
-    console.log(geoAccidents);
+    //console.log("GeoAccidents:");
+    //console.log(geoAccidents);
 
     var area = g.selectAll(".area").data(areas);
 
