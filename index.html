@@ -36,8 +36,8 @@
 									Weather Conditions
 								</button>
 								<div class="dropdown-menu">
-									<a class="dropdown-item" href="#">Sunny</a>
-									<a class="dropdown-item" href="#">Rainy</a>
+									<a class="dropdown-item" href="#">Fine without high winds</a>
+									<a class="dropdown-item" href="#">Raining without high winds</a>
 									<a class="dropdown-item" href="#">Windy</a>
 								</div>
 
@@ -45,8 +45,8 @@
 									Light Conditions
 								</button>
 								<div class="dropdown-menu">
-									<a class="dropdown-item" href="#">Light</a>
-									<a class="dropdown-item" href="#">Dark</a>
+									<a class="dropdown-item" href="#">Daylight: Street light present</a>
+									<a class="dropdown-item" href="#">Darkness: Street lights present and lit</a>
 									<a class="dropdown-item" href="#">Darker</a>
 								</div>
 
@@ -55,7 +55,7 @@
 								</button>
 									<div class="dropdown-menu">
 									<a class="dropdown-item" href="#">Dry</a>
-									<a class="dropdown-item" href="#">Wet</a>
+									<a class="dropdown-item" href="#">Wet/Damp</a>
 									<a class="dropdown-item" href="#">Very wet</a>
 								</div>
 							</div>
@@ -76,26 +76,32 @@
 				<!-- Scatter plot -->
 				<div class="col-sm-4">
 					<div class="chart-wrapper">
-						<button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							Y-value
-						</button>
-						<div class="dropdown-menu">
-							<a class="dropdown-item" href="#">Alt1</a>
-							<a class="dropdown-item" href="#">Alt2</a>
-							<a class="dropdown-item" href="#">Alt3</a>
+						<div class="form-group" id="x">
+							<select class="form-control" id="sel1">
+								<option value="Day_of_Week">Day of Week</option>
+								<option value="Speed_limit">Speed Limit</option>
+								<option value="Number_of_Vehicles">Number of Vehicles</option>
+								<option value="Number_of_Casualties">Number of Casualties</option>
+								<option value="Date">Date</option>
+								<option value="Time">Time</option>
+								<option value="Year">Year</option>
+							</select>
 						</div>
 
 						<div class="chart-stage">
 							<div id="scatter-plot"></div>
 						</div>
 
-						<button class="btn btn-secondary btn-sm dropdown-toggle" id="xval-btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							X-value
-						</button>
-						<div class="dropdown-menu">
-							<a class="dropdown-item" href="#">Alt1</a>
-							<a class="dropdown-item" href="#">Alt2</a>
-							<a class="dropdown-item" href="#">Alt3</a>
+						<div class="form-group">
+							<select class="form-control" id="sel12">
+								<option value="Day_of_Week">Day of Week</option>
+								<option value="Speed_limit">Speed Limit</option>
+								<option value="Number_of_Vehicles">Number of Vehicles</option>
+								<option value="Number_of_Casualties">Number of Casualties</option>
+								<option value="Date">Date</option>
+								<option value="Time">Time</option>
+								<option value="Year">Year</option>
+							</select>
 						</div>
 					</div>
 				</div>

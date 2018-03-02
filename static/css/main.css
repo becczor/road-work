@@ -29,12 +29,22 @@
     margin-bottom: 120px;
 }
 
-#xval-btn{
-    margin-left: 190px;
-}
-
 .dropdown-item{
     position: relative;
+}
+
+.form-group{
+    transform: scale(0.4, 0.6);
+}
+
+#x{
+
+}
+
+#sel1{
+    float: left;
+
+    transform: translate(-500px,400px) rotate(-90deg);
 }
 
 .background path {
