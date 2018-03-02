@@ -1,44 +1,53 @@
-/*
-  Created: Jan 14 2018
-  Author: Kahin Akram Hassan
-*/
+// Counts all instances of a given property
+function count_data(data, prop) {
+	var counted = {};
+	data.forEach(function(d) {
+		// https://stackoverflow.com/questions/18690814/javascript-object-increment-item-if-not-exist
+		counted[d[prop]] = (counted[d[prop]] || 0) + 1;
+	});
+	return counted;
+}
 
-function sp(data){
+function bc(data){
+	// https://bl.ocks.org/d3noob/bdf28027e0ce70bd132edc64f1dd7ea4
 
     //console.log(data);
 
     this.data = data;
-    var div = '#scatter-plot';
+    var counted_data = count_data(data, "Day_of_Week"); 
+    var div = '#bar-chart';
 
     var height = 500;
     var parentWidth = $(div).parent().width();
-    var margin = {top: 10, right: 20, bottom: 20, left: 50},
+    var margin = {top: 20, right: 20, bottom: 60, left: 40},
         width = parentWidth - margin.right - margin.left,
         height = height - margin.top - margin.bottom;
 
-    var color = d3.scaleOrdinal(d3.schemeCategory20);
+    //var color = d3.scaleOrdinal(d3.schemeCategory20);
 
     var tooltip = d3.select(div).append("div")
         .attr("class", "tooltip")
         .style("opacity", 0);
 
     // scale configuration
-    var x = d3.scaleLinear().range([0, width]);
-    var y = d3.scaleLinear().range([height, 0]);
+    var x = d3.scaleBand()
+          .range([0, width])
+          .padding(0.1);
+    // Use ordinal scale for categorical data, linear scale for continuous data.
+    var y = d3.scaleOrdinal().range([height, 0]);
 
     /* Task 2
       Initialize 4 (x,y,country,circle-size)
       variables and assign different data attributes from the data filter
       Then use domain() and extent to scale the axes*/
-    var xValue = 'Day_of_Week';
-    //var yValue = 'Speed_limit';
+    /*var xValue = 'Day_of_Week';
     var yValue = 'Local_Authority_(District)';
-    var radius = 'Accident_Severity';
+    var radius = 'Accident_Severity';*/
 
 
     /*x and y domain code here, based on values from data*/
-    x.domain(d3.extent(data, function(d){return d[xValue];})).nice();
-    y.domain(d3.extent(data, function(d){return d[yValue];})).nice();
+    x.domain(Object.keys(counted_data));
+    y.domain(d3.extent(Object.values(counted_data)));
 
     // QUESTION: How do we know that we can apply extent on data, since it is an object and not an array?
     // https://github.com/d3/d3-array/blob/master/README.md#extent
@@ -47,10 +56,10 @@ function sp(data){
     var xAxis = d3.axisBottom(x);
     var yAxis = d3.axisLeft(y);
 
-    var cValue = function(d) { return d.Accident_Index;};
-    var color = d3.scaleOrdinal(d3.schemeCategory20b);
+    /*var cValue = function(d) { return d.Accident_Index;};
+    var color = d3.scaleOrdinal(d3.schemeCategory20b);*/
 
-
+    // append the svg object to the div
     var svg = d3.select(div).append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
@@ -64,50 +73,57 @@ function sp(data){
         .attr("transform","translate(" + 0 + "," + height + ")")
         .call(xAxis);
 
-  //  svg.append("text")
-  //      .attr("class", "label")
-  //      .attr("transform", "translate(" + (width/2) + " ," + (height + margin.top + 20) + ")")
-  //      .style("text-anchor", "middle")
-  //      .text("Day of week");
+    /*svg.append("text")
+        .attr("class", "label")
+        .attr("transform", "translate(" + (width/2) + " ," + (height + margin.top + 20) + ")")
+        .style("text-anchor", "middle")
+        .text("Day of week");*/
 
     svg.append("g")
         .attr("class", "axis")
         .call(yAxis);
 
-   // svg.append("text")
-   //     .attr("class", "label")
-   //     .style("text-anchor", "start")
-   //     .text("1st Road Number");
+    /*svg.append("text")
+        .attr("class", "label")
+        .style("text-anchor", "start")
+        .text("1st Road Number");*/
 
     /* ~~ Task 4 Add the scatter dots. ~~ */
 
     // The enter function creates placeholders for missing objects that we are about to create
 
-    var circles = svg.selectAll("circles")
-        .data(data)
-
-        .enter().append("circle")
-        .attr("class", "circles")
-        .attr("r", function(d){
-            return d[radius]*3;
+    var bars = svg.selectAll("bar")
+        .data(counted_data, function(d) {
+        	return d.key;
         })
 
-        .attr("cx", function(d){
-            return x(d[xValue]);}
-        )
-        .attr("cy", function(d){
-            return y(d[yValue]);}
-        )
+        .enter().append("rect")
+        .attr("class", "bar")
 
-        .style("fill", function(d) { return color(cValue(d));})
+        .attr("x", function(d) {
+        	console.log(d.value);
+        	return x(d.value);
+        })
+
+        .attr("width", x.bandwidth())
+
+        .attr("y", function(d){
+        	console.log(d.key);
+            return y(d.key);
+        })
+        .attr("height", function(d) {
+        	return height - y(d.key);
+        })
+
+        .style("fill", "blue");
 
         /* ~~ Task 5 create the brush variable and call highlightBrushedCircles() ~~ */
 
         // Make circles non_brushed from beginning
-        .attr("class", "non_brushed");
+        //.attr("class", "non_brushed");
 
     // Create a 2D brush and set event listener (what is going to happen in case of an event)
-    var brush = d3.brush()
+    /*var brush = d3.brush()
         .on("brush", highlightBrushedCircles);
 
 
@@ -134,7 +150,7 @@ function sp(data){
             var d_brushed =  d3.selectAll(".brushed").data();
 
 
-            /* ~~~ Call pc or/and map function to filter ~~~ */
+            /* ~~~ Call pc or/and map function to filter ~~~ 
 
         }
     }//highlightBrushedCircles
@@ -163,7 +179,7 @@ function sp(data){
 
 
 
-    };
+    };*/
 
 
-}//End
+} //End
