@@ -9,12 +9,12 @@ function count_data(data, prop) {
 }
 
 function bc(data){
-	// https://bl.ocks.org/d3noob/bdf28027e0ce70bd132edc64f1dd7ea4
 
     //console.log(data);
 
     this.data = data;
-    var counted_data = count_data(data, "Day_of_Week"); 
+    var counted_data = count_data(data, "Day_of_Week");
+    console.log(counted_data);
     var div = '#bar-chart';
 
     var height = 500;
@@ -33,8 +33,7 @@ function bc(data){
     var x = d3.scaleBand()
           .range([0, width])
           .padding(0.1);
-    // Use ordinal scale for categorical data, linear scale for continuous data.
-    var y = d3.scaleOrdinal().range([height, 0]);
+    var y = d3.scaleLinear().range([height, 0]);
 
     /* Task 2
       Initialize 4 (x,y,country,circle-size)
@@ -44,10 +43,13 @@ function bc(data){
     var yValue = 'Local_Authority_(District)';
     var radius = 'Accident_Severity';*/
 
-
+    console.log(Object.keys(counted_data));
     /*x and y domain code here, based on values from data*/
     x.domain(Object.keys(counted_data));
-    y.domain(d3.extent(Object.values(counted_data)));
+	y.domain(d3.extent(Object.values(counted_data)));
+
+    console.log(x.domain());
+    console.log(y.domain());
 
     // QUESTION: How do we know that we can apply extent on data, since it is an object and not an array?
     // https://github.com/d3/d3-array/blob/master/README.md#extent
@@ -89,33 +91,34 @@ function bc(data){
         .text("1st Road Number");*/
 
     /* ~~ Task 4 Add the scatter dots. ~~ */
+    for (element in counted_data) {
+    	console.log(element);
+    	console.log(element.key);
+    	console.log(element.value);
+    }
 
     // The enter function creates placeholders for missing objects that we are about to create
 
-    var bars = svg.selectAll("bar")
-        .data(counted_data, function(d) {
-        	return d.key;
-        })
+    var bars = svg.selectAll(".bar")
+        .data(counted_data)
 
         .enter().append("rect")
         .attr("class", "bar")
 
         .attr("x", function(d) {
-        	console.log(d.value);
-        	return x(d.value);
+        	return x(d.key);
         })
 
         .attr("width", x.bandwidth())
 
         .attr("y", function(d){
-        	console.log(d.key);
-            return y(d.key);
+            return height - y(+d.value);
         })
         .attr("height", function(d) {
-        	return height - y(d.key);
+        	return y(+d.value);
         })
 
-        .style("fill", "blue");
+        .style("fill", "steelblue");
 
         /* ~~ Task 5 create the brush variable and call highlightBrushedCircles() ~~ */
 
