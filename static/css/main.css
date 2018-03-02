@@ -1,3 +1,41 @@
+.application{
+    margin-top: -40px;
+}
+
+.navbar{
+    position: center;
+    margin-bottom: 20px;
+}
+
+.navbar-header{
+    margin-left: 500px;
+}
+
+.sortTitle{
+    margin-left: 60px;
+    margin-top: 20px;
+}
+
+.btn{
+    margin: 20px;
+}
+
+#middle-btn{
+    margin-left: 30px;
+}
+
+#last-btn{
+    margin-left: 30px;
+    margin-bottom: 120px;
+}
+
+#xval-btn{
+    margin-left: 190px;
+}
+
+.dropdown-item{
+    position: relative;
+}
 
 .background path {
   fill: none;

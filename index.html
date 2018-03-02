@@ -11,20 +11,60 @@
 </head>
 <body class="application">
 
-  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container-fluid">
+
+<div class="container-fluid">
+    <div class="navbar navbar-inverse" role="navigation">
       <div class="navbar-header">
         <a class="navbar-brand" href="./">Road Work - A Traffic Visualization</a>
       </div>
     </div>
-  </div>
+</div>
 
   <div class="container-fluid">
 
       <div class="row">
 
+          <!-- Buttons -->
+          <div class="col-sm-2">
+              <div class="chart-wrapper">
+                  <div class="chart-stage">
+
+                      <h5 class="sortTitle">Sort by:</h5>
+
+                      <div id="buttons">
+                          <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              Weather Conditions
+                          </button>
+                          <div class="dropdown-menu">
+                              <a class="dropdown-item" href="#">Sunny</a>
+                              <a class="dropdown-item" href="#">Rainy</a>
+                              <a class="dropdown-item" href="#">Windy</a>
+                          </div>
+
+                          <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="middle-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              Light Conditions
+                          </button>
+                          <div class="dropdown-menu">
+                              <a class="dropdown-item" href="#">Light</a>
+                              <a class="dropdown-item" href="#">Dark</a>
+                              <a class="dropdown-item" href="#">Darker</a>
+                          </div>
+
+                          <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="last-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              Road Conditions
+                          </button>
+                          <div class="dropdown-menu">
+                              <a class="dropdown-item" href="#">Dry</a>
+                              <a class="dropdown-item" href="#">Wet</a>
+                              <a class="dropdown-item" href="#">Very wet</a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
           <!-- Map -->
-          <div class="col-sm-8">
+          <div class="col-sm-6">
             <div class="chart-wrapper">
               <div class="chart-stage">
                 <div id="world-map"></div>
@@ -36,9 +76,29 @@
           <!-- Scatter plot -->
           <div class="col-sm-4">
             <div class="chart-wrapper">
+
+                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Y-value
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">Alt1</a>
+                    <a class="dropdown-item" href="#">Alt2</a>
+                    <a class="dropdown-item" href="#">Alt3</a>
+                </div>
+
               <div class="chart-stage">
                 <div id="scatter-plot"></div>
               </div>
+
+                <button class="btn btn-secondary btn-sm dropdown-toggle" id="xval-btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    X-value
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">Alt1</a>
+                    <a class="dropdown-item" href="#">Alt2</a>
+                    <a class="dropdown-item" href="#">Alt3</a>
+                </div>
+
             </div>
           </div>
 
@@ -48,6 +108,7 @@
 
 
   <script src="./static/lib/js/jquery.min.js"></script>
+  <script src="./static/lib/js/bootstrap.bundle.min.js"></script>
   <script src="./static/lib/js/bootstrap.min.js"></script>
   <script src="./static/lib/js/d3.min.js"></script>
   <script src="https://d3js.org/topojson.v2.min.js"></script>

@@ -12,7 +12,7 @@ function sp(data){
 
     var height = 500;
     var parentWidth = $(div).parent().width();
-    var margin = {top: 20, right: 20, bottom: 60, left: 40},
+    var margin = {top: 10, right: 20, bottom: 20, left: 50},
         width = parentWidth - margin.right - margin.left,
         height = height - margin.top - margin.bottom;
 
@@ -64,20 +64,20 @@ function sp(data){
         .attr("transform","translate(" + 0 + "," + height + ")")
         .call(xAxis);
 
-    svg.append("text")
-        .attr("class", "label")
-        .attr("transform", "translate(" + (width/2) + " ," + (height + margin.top + 20) + ")")
-        .style("text-anchor", "middle")
-        .text("Day of week");
+  //  svg.append("text")
+  //      .attr("class", "label")
+  //      .attr("transform", "translate(" + (width/2) + " ," + (height + margin.top + 20) + ")")
+  //      .style("text-anchor", "middle")
+  //      .text("Day of week");
 
     svg.append("g")
         .attr("class", "axis")
         .call(yAxis);
 
-    svg.append("text")
-        .attr("class", "label")
-        .style("text-anchor", "start")
-        .text("1st Road Number");
+   // svg.append("text")
+   //     .attr("class", "label")
+   //     .style("text-anchor", "start")
+   //     .text("1st Road Number");
 
     /* ~~ Task 4 Add the scatter dots. ~~ */
 
