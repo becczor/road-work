@@ -32,7 +32,7 @@ function sp(data){
       Then use domain() and extent to scale the axes*/
     var xValue = 'Day_of_Week';
     //var yValue = 'Speed_limit';
-    var yValue = '1st_Road_Number';
+    var yValue = 'Local_Authority_(District)';
     var radius = 'Accident_Severity';
 
 

@@ -98,7 +98,14 @@ function map(data, area_map_json){
         .style("fill", function(d) { return cc[d.properties.name]; })
 
         //tooltip
-        .on("mousemove", function(d) {
+        .on("mouseout",  function(d) {
+            d3.select(this).style('stroke','none');
+            tooltip.transition()
+                .duration(500)
+                .style("opacity", 0);
+        })
+        //selection
+        .on("click",  function(d) {
             d3.select(this).style('stroke','white');
 
             tooltip.transition()
@@ -109,25 +116,13 @@ function map(data, area_map_json){
             // TODO: Make tooltip box big enough for the text.
                 .attr("style", "left:"+(mouse[0]+30)+"px;top:"+(mouse[1]+30)+"px")
                 .html(d.properties.lad16nm);
-        })
-        .on("mouseout",  function(d) {
 
-            d3.select(this).style('stroke','none');
-            tooltip.transition()
-                .duration(500)
-                .style("opacity", 0);
-        })
-
-        //selection
-        /*.on("click",  function(d) {
-            console.log(d);
+            /* //~~ call the other graphs method for selection here ~~
             var found = data.find(function(element) {
-                console.log(element);
                 return element.Country === d.properties.name;
             });
-            sp.selectDots([found]);
-            /*~~ call the other graphs method for selection here ~~
-        });*/
+            sp.selectDots([found]);*/
+        });
 
     drawPoints();
 
@@ -155,9 +150,9 @@ function map(data, area_map_json){
 
             })
             .on("click",  function(d) {
-                console.log(d); // Feature collection of accident data
+                //console.log(d); // Feature collection of accident data
                 var found = data.find(function(element) {
-                    console.log(element); // Element in actual data
+                    //console.log(element); // Element in actual data
                     return element.Accident_Index === d.index;
                 });
                 sp.selectDots([found]);
