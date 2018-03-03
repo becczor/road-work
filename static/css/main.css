@@ -16,15 +16,10 @@
     margin-top: 20px;
 }
 
-.form-group{
-    transform: scale(0.4, 0.6);
-}
-
-
-#sel1{
-    float: left;
-
-    transform: translate(-500px,400px) rotate(-90deg);
+.selectpicker{
+    transform: scale(0.3,0.3);
+    margin-top: 10px;
+    margin-bottom: 50px;
 }
 
 .background path {
