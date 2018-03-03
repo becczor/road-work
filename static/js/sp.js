@@ -30,12 +30,12 @@ function sp(data){
       Initialize 4 (x,y,country,circle-size)
       variables and assign different data attributes from the data filter
       Then use domain() and extent to scale the axes*/
-    //var xValue = 'Day_of_Week';
+    var xValue = 'Day_of_Week';
     //var yValue = 'Speed_limit';
-    //var yValue = 'Local_Authority_(District)';
+    var yValue = 'Local_Authority_(District)';
 
-    var xValue = document.getElementById('sel12').value;
-    var yValue = document.getElementById('sel1').value;
+    //var xValue = document.getElementById('sel12').value;
+    //var yValue = document.getElementById('sel1').value;
 
     //console.log("x:");
     //console.log(testX);

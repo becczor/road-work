@@ -3,7 +3,8 @@
 <html>
 	<head>
 		<title>Road Work</title>
-		<link rel="stylesheet" href="./static/lib/css/bootstrap-select.scss">
+		<!--<link rel="stylesheet" href="./static/lib/css/bootstrap-select.scss">-->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
 		<link rel="stylesheet" href="./static/lib/css/variables.scss">
 		<link rel="stylesheet" href="./static/lib/css//bootstrap.min.css">
 		<link rel="stylesheet" href="./static/lib/css/keen-dashboards.css">
@@ -33,30 +34,29 @@
 
 							<h5 class="sortTitle">Sort by:</h5>
 
-							<!--<div class="form-group" id="sort_weather">-->
-							<select class="selectpicker" multiple id="sel_weather" title="Weather Conditions" data-style="btn-info">
-								<option value="Day_of_Week">Day of Week</option>
-								<option value="Day_of_Week">Day of Week</option>
-								<option value="Day_of_Week">Day of Week</option>
-								<option value="Day_of_Week">Day of Week</option>
-								<option value="Day_of_Week">Day of Week</option>
+							<div class="selecter">
+							<select class="selectpicker show-tick" multiple id="sel_weather" data-width="190px" title="Weather Conditions" data-style="btn-info">
+								<option value="1">Day of Week</option>
 							</select>
-							<!--</div>-->
-							<select class="selectpicker" multiple id="sel_light" title="Light Conditions" data-style="btn-info">
-								<option value="Day_of_Week">Day of Week</option>
-								<option value="Day_of_Week">Day of Week</option>
-								<option value="Day_of_Week">Day of Week</option>
-								<option value="Day_of_Week">Day of Week</option>
-								<option value="Day_of_Week">Day of Week</option>
-							</select>
-
-							<select class="selectpicker" multiple id="sel_road" title="Road Conditions" data-style="btn-info">
-								<option value="Day_of_Week">Day of Week</option>
-								<option value="Day_of_Week">Day of Week</option>
-								<option value="Day_of_Week">Day of Week</option>
-								<option value="Day_of_Week">Day of Week</option>
-								<option value="Day_of_Week">Day of Week</option>
-							</select>
+						 	</div>
+							<div class="selecter">
+								<select class="selectpicker show-tick" multiple id="sel_light" data-width="190px" title="Light Conditions" data-style="btn-info">
+									<option value="1">Day</option>
+									<option value="2">Day</option>
+									<option value="3">Day</option>
+									<option value="4">Day</option>
+									<option value="5">Day</option>
+								</select>
+							</div>
+							<div class="selecter">
+								<select class="selectpicker show-tick" multiple id="sel_road" data-width="190px" title="Road Surface Conditions" data-style="btn-info">
+									<option value="1">Week</option>
+									<option value="2">Week</option>
+									<option value="3">Week</option>
+									<option value="4">Week</option>
+									<option value="5">Week</option>
+								</select>
+							</div>
 
 
 						</div>
@@ -137,7 +137,9 @@
 		<script src="./static/lib/js/jquery.min.js"></script>
 		<script src="./static/lib/js/bootstrap.bundle.min.js"></script>
 		<script src="./static/lib/js/bootstrap.min.js"></script>
-		<script src="./static/lib/js/bootstrap-select.js"></script>
+		<!--<script src="./static/lib/js/bootstrap-select.js"></script>-->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+		<script src="./static/lib/js/bootstrap-dropdown.js"></script>
 		<script src="./static/lib/js/d3.min.js"></script>
 		<script src="https://d3js.org/topojson.v2.min.js"></script>
 		<script src="./static/lib/js/queue.js"></script>
