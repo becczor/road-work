@@ -5,64 +5,54 @@ queue()
 
 var sp, map, bc;
 
-// Counts all occurencies of values for a given property. Returns object with the values and its count.
-function countOccurencies(data, prop) {
-	var counted = {};
-	data.forEach(function(d) {
-		// https://stackoverflow.com/questions/18690814/javascript-object-increment-item-if-not-exist
-		counted[d[prop]] = (counted[d[prop]] || 0) + 1;
-	});
-	return counted;
-}
-
 // Gets all unique values for a given property. Returns a list of all unique values.
 function getOccurencies(data, prop) {
 	var occ = [];
+	//console.log(data);
 	data.forEach(function(d) {
-		if !(occ.includes(d[prop])) {
+		if (!occ.includes(d[prop])) {
 			occ.push(d[prop]);
 		}
 	});
 	return occ;
 }
 
-function setFormOptions(data, html) {
+function setFormOptions(data) {
 	var htmlString = "";
 	var options = [];
-
+	
 	// Weather_Conditions
-	options = getOccurencies(data, "Weather_Conditions");
+	var options = getOccurencies(data, "Weather_Conditions");
+	console.log(options);
 	for (option in options) {
-		htmlString += "<option value=" + option + ">" + option + "</option>\n";
+		console.log(options[option]);
+		htmlString += "<option value=\"'" + options[option] + "'\">" + options[option] + "</option>\n";
 	}
-	document.getElementById("xx").innerHTML = htmlString;
+	document.getElementById("sel_weather").innerHTML = htmlString;
+
 
 	// Light_Conditions
+	htmlString = "";
 	options = getOccurencies(data, "Light_Conditions");
 	for (option in options) {
-		htmlString += "<option value=" + option + ">" + option + "</option>\n";
+		htmlString += "<option value=" + options[option] + ">" + options[option] + "</option>\n";
 	}
-	document.getElementById("xx").innerHTML = htmlString;
+	document.getElementById("sel_light").innerHTML = htmlString;
 
 	// Road_Surface_Conditions
+	htmlString = "";
 	options = getOccurencies(data, "Road_Surface_Conditions");
 	for (option in options) {
-		htmlString += "<option value=" + option + ">" + option + "</option>\n";
+		htmlString += "<option value=" + options[option] + ">" + options[option] + "</option>\n";
 	}
-	document.getElementById("xx").innerHTML = htmlString;
+	document.getElementById("sel_road").innerHTML = htmlString;
 
-	
 }
-
-$( document ).ready(function() {
-	setFormOptions(data, html);
-
-
-});
-
 
 function draw(error, data, area_map_json){
     if (error) throw error;
+
+    setFormOptions(data);
 
     sp = new sp(data);
     map = new map(data, area_map_json);

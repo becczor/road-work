@@ -34,8 +34,8 @@ function sp(data){
     //var yValue = 'Speed_limit';
     //var yValue = 'Local_Authority_(District)';
 
-    var xValue = document.getElementById('sel12').value;
-    var yValue = document.getElementById('sel1').value;
+    var xValue = document.getElementById('sel_x').value;
+    var yValue = document.getElementById('sel_y').value;
 
     //console.log("x:");
     //console.log(testX);
