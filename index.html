@@ -24,41 +24,32 @@
 
 			<div class="row">
 			
-				<!-- Buttons -->
+				<!-- Sort Buttons -->
 				<div class="col-sm-2">
 					<div class="chart-wrapper">
 						<div class="chart-stage">
 
 							<h5 class="sortTitle">Sort by:</h5>
 
-							<div id="buttons">
-								<button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									Weather Conditions
-								</button>
-								<div class="dropdown-menu">
-									<a class="dropdown-item" href="#">Fine without high winds</a>
-									<a class="dropdown-item" href="#">Raining without high winds</a>
-									<a class="dropdown-item" href="#">Windy</a>
-								</div>
-
-								<button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="middle-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									Light Conditions
-								</button>
-								<div class="dropdown-menu">
-									<a class="dropdown-item" href="#">Daylight: Street light present</a>
-									<a class="dropdown-item" href="#">Darkness: Street lights present and lit</a>
-									<a class="dropdown-item" href="#">Darker</a>
-								</div>
-
-								<button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="last-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									Road Conditions
-								</button>
-									<div class="dropdown-menu">
-									<a class="dropdown-item" href="#">Dry</a>
-									<a class="dropdown-item" href="#">Wet/Damp</a>
-									<a class="dropdown-item" href="#">Very wet</a>
-								</div>
+							<div class="form-group" id="sort_weather">
+								<select multiple class="form-control" id="sel_weather">
+									<option value="Day_of_Week">Day of Week</option>
+								</select>
 							</div>
+
+							<div class="form-group" id="sort_road">
+								<select multiple class="form-control" id="sel_road">
+									<option value="Day_of_Week">Day of Week</option>
+								</select>
+							</div>
+
+							<div class="form-group" id="sort_light">
+								<select multiple class="form-control" id="sel_light">
+									<option value="Day_of_Week">Day of Week</option>
+
+								</select>
+							</div>
+
 						</div>
 					</div>
 				</div>
