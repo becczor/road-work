@@ -14,7 +14,6 @@ function bc(data){
 
     this.data = data;
     var counted_data = count_data(data, "Day_of_Week");
-    console.log(counted_data);
     var div = '#bar-chart';
 
     var height = 500;
@@ -43,13 +42,9 @@ function bc(data){
     var yValue = 'Local_Authority_(District)';
     var radius = 'Accident_Severity';*/
 
-    console.log(Object.keys(counted_data));
     /*x and y domain code here, based on values from data*/
     x.domain(Object.keys(counted_data));
 	y.domain(d3.extent(Object.values(counted_data)));
-
-    console.log(x.domain());
-    console.log(y.domain());
 
     // QUESTION: How do we know that we can apply extent on data, since it is an object and not an array?
     // https://github.com/d3/d3-array/blob/master/README.md#extent
@@ -91,31 +86,26 @@ function bc(data){
         .text("1st Road Number");*/
 
     /* ~~ Task 4 Add the scatter dots. ~~ */
-    for (element in counted_data) {
-    	console.log(element);
-    	console.log(element.key);
-    	console.log(element.value);
-    }
 
     // The enter function creates placeholders for missing objects that we are about to create
 
     var bars = svg.selectAll(".bar")
-        .data(counted_data)
+        .data(Object.entries(counted_data))
 
         .enter().append("rect")
         .attr("class", "bar")
 
         .attr("x", function(d) {
-        	return x(d.key);
+        	return x(d[0]); // d[0] is key of each entry
         })
 
         .attr("width", x.bandwidth())
 
         .attr("y", function(d){
-            return height - y(+d.value);
+            return y(d[1]);
         })
         .attr("height", function(d) {
-        	return y(+d.value);
+        	return height - y(d[1]); // d[1] is value of each entry
         })
 
         .style("fill", "steelblue");
