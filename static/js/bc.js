@@ -1,19 +1,11 @@
-// Counts all instances of a given property
-function count_data(data, prop) {
-	var counted = {};
-	data.forEach(function(d) {
-		// https://stackoverflow.com/questions/18690814/javascript-object-increment-item-if-not-exist
-		counted[d[prop]] = (counted[d[prop]] || 0) + 1;
-	});
-	return counted;
-}
 
 function bc(data){
 
     //console.log(data);
 
     this.data = data;
-    var counted_data = count_data(data, "Day_of_Week");
+    // Function count_data is placed in main.js
+    var counted_data = countOccurencies(data, "Day_of_Week");
     var div = '#bar-chart';
 
     var height = 500;
