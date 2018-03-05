@@ -12,13 +12,28 @@
 }
 
 .sortTitle{
-    margin-left: 60px;
-    margin-top: 20px;
+    margin-left: 0px;
+    margin-top: 0px;
 }
 
-.selecter{
+.chart-stage{
+    height: 600px;
+}
+
+#sel_x{
+    width: 200px;
+    margin-left: 120px;
+}
+
+#sel_y{
+    width: 150px;
+    margin-left: 10px;
     margin-top: 10px;
-    margin-bottom: 70px;
+}
+
+#sel_bc{
+    width: 400px;
+    margin-left: 470px;
 }
 
 .background path {
