@@ -8,16 +8,30 @@
 }
 
 .navbar-header{
-    margin-left: 500px;
+    margin-left: 400px;
 }
 
-.sortTitle{
-    margin-left: 0px;
-    margin-top: 0px;
+.form-control{
+    margin-bottom: 20px;
+    margin-top: 10px;
 }
 
-.chart-stage{
-    height: 600px;
+.scatter-sort{
+    height: 642px;
+}
+
+#option{
+    margin-left: 80px;
+    margin-top: 20px;
+}
+
+#clear{
+    margin-left: 85px;
+    margin-bottom: 20px;
+}
+
+#world-map{
+    height: 642px;
 }
 
 #sel_x{

@@ -2,11 +2,15 @@
   Created: Jan 14 2018
   Author: Kahin Akram Hassan
 */
+function clear(){
+    document.getElementById("sel_light").reset();
+}
+
+
 function map(data, area_map_json){
 
     this.data = data;
     this.area_map_json = area_map_json;
-
 
 
     var div = '#world-map';
@@ -78,8 +82,8 @@ function map(data, area_map_json){
         return data;
     }
 
-    //console.log("GeoAccidents:");
-    //console.log(geoAccidents);
+   // console.log("GeoAccidents:");
+   // console.log(geoAccidents);
 
     var area = g.selectAll(".area").data(areas);
 
@@ -123,12 +127,34 @@ function map(data, area_map_json){
             });
             sp.selectDots([found]);*/
         });
+        
+    var selectedlight = document.getElementById("sel_light").selectedIndex;
+    var filter_light = document.getElementsByTagName("option")[selectedlight].text;
+
+   // var selectedroad = document.getElementById("sel_road").selectedIndex;
+    //var filter_road = document.getElementsByTagName("option")[selectedroad].text;
+
+    //var selectedweather = document.getElementById("sel_weather").selectedIndex;
+    //svar filter_weather = document.getElementsByTagName("option")[selectedweather].text;
 
     drawPoints();
 
-
     function drawPoints(){
+        //Helt hårdkodad filtrering
+        if(filter_light.toString() === "Daylight: Street light present")
+        {
+            //Här vill vi bara lägga till de med type = "Daylight: Street light present"
+            //Alltså vill vi bara lägga till de points som innehåller strängen ^
+            console.log("hej");
+        }
+        else{
+            console.log("hej hej");
+            //Annars lägger vi till alla
+           // var point = g.selectAll(".point").data(geoAccidents.features);
+        }
+
         var point = g.selectAll(".point").data(geoAccidents.features);
+
         point.enter().append("path")
             .attr("class", "point")
             .attr("d", path)

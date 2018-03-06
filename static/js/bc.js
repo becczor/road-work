@@ -16,7 +16,9 @@ function bc(data){
     //console.log(data);
 
     this.data = data;
-    var counted_data = countOccurencies(data, "Day_of_Week");
+    var sortBy = document.getElementById('sel_bc').value;
+   // var counted_data = countOccurencies(data, "Day_of_Week");
+    var counted_data = countOccurencies(data, sortBy);
     var div = '#bar-chart';
 
     var height = 500;
