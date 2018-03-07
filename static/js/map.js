@@ -83,8 +83,8 @@ function map(data, area_map_json){
         return data;
     }
 
-    console.log("GeoAccidents.features:");
-    console.log(geoAccidents.features);
+    //console.log("GeoAccidents.features:");
+    //console.log(geoAccidents.features);
 
     var area = g.selectAll(".area").data(areas);
 
@@ -130,42 +130,35 @@ function map(data, area_map_json){
         });
 
     var selectedlight = document.getElementById("sel_light").selectedIndex;
-    var filter_light = document.getElementsByTagName("option")[selectedlight];
+    var filter_light_param = document.getElementsByTagName("option")[selectedlight];
 
-   // var selectedroad = document.getElementById("sel_road").selectedIndex;
+
+    //var selectedroad = document.getElementById("sel_road").selectedIndex;
     //var filter_road = document.getElementsByTagName("option")[selectedroad].text;
 
     //var selectedweather = document.getElementById("sel_weather").selectedIndex;
-    //svar filter_weather = document.getElementsByTagName("option")[selectedweather].text;
+    //var filter_weather = document.getElementsByTagName("option")[selectedweather].text;
 
     drawPoints();
 
     function drawPoints(){
-        //Helt hårdkodad filtrering
-        if(filter_light)
+        if(filter_light_param)
         {
-            //Här vill vi bara lägga till de med type = "Daylight: Street light present"
-            //Alltså vill vi bara lägga till de points som innehåller strängen ^
-            console.log("hej");
+            // Add only data point that contains filtering text string
+            //console.log("hej");
             var filtered_data = [];
             geoAccidents.features.forEach(function(d){
-                console.log(d);
-                console.log(d.light_conditions);
-
-                if(d.light_conditions == "Daylight: Street light present") {
+                if(d.light_conditions == filter_light_param.text) {
                     filtered_data.push(d);
-                    //console.log(d.Light_Conditions);
                 }
             });
             var point = g.selectAll(".point").data(filtered_data);
         }
         else{
-            console.log("hej hej");
-            //Annars lägger vi till alla
+            //console.log("hej hej");
+            // Add all data
             var point = g.selectAll(".point").data(geoAccidents.features);
         }
-
-        //var point = g.selectAll(".point").data(geoAccidents.features);
 
         point.enter().append("path")
             .attr("class", "point")
