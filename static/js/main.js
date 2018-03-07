@@ -1,5 +1,5 @@
 queue()
-    .defer(d3.csv,'static/data/data-small.csv')
+    .defer(d3.csv,'static/data/final_data.csv')
     .defer(d3.json,'static/maps/Local_Authority_Districts_Dec_2016-topo.json')
     .await(draw);
 

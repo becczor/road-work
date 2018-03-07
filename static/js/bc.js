@@ -49,7 +49,7 @@ function bc(data){
 
     /*x and y domain code here, based on values from data*/
     x.domain(Object.keys(counted_data));
-	y.domain(d3.extent(Object.values(counted_data)));
+	y.domain([0,d3.max(Object.values(counted_data))]);
 
     // QUESTION: How do we know that we can apply extent on data, since it is an object and not an array?
     // https://github.com/d3/d3-array/blob/master/README.md#extent
