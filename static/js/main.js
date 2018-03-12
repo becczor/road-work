@@ -17,21 +17,16 @@ function getOccurencies(data, prop) {
 	return occ;
 }
 
-
-
 function setFormOptions(data) {
 	var htmlString = "";
 	var options = [];
 	
 	// Weather_Conditions
 	var options = getOccurencies(data, "Weather_Conditions");
-	//console.log(options);
 	for (option in options) {
-		//console.log(options[option]);
 		htmlString += "<option value=\"'" + options[option] + "'\">" + options[option] + "</option>\n";
 	}
 	document.getElementById("sel_weather").innerHTML = htmlString;
-	//console.log(htmlString);
 
 	// Light_Conditions
 	htmlString = "";
@@ -40,7 +35,6 @@ function setFormOptions(data) {
 		htmlString += "<option value=" + options[option] + ">" + options[option] + "</option>\n";
 	}
 	document.getElementById("sel_light").innerHTML = htmlString;
-    //console.log(htmlString);
 
 	// Road_Surface_Conditions
 	htmlString = "";
@@ -49,7 +43,6 @@ function setFormOptions(data) {
 		htmlString += "<option value=" + options[option] + ">" + options[option] + "</option>\n";
 	}
 	document.getElementById("sel_road").innerHTML = htmlString;
-    //console.log(htmlString);
 
 /*	// Scatter Plot x
 	htmlString = "";
@@ -74,6 +67,7 @@ function draw(error, data, area_map_json){
     if (error) throw error;
 
     setFormOptions(data);
+    //configScatterFunc();
 
     sp = new sp(data);
     map = new map(data, area_map_json);
