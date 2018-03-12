@@ -30,7 +30,7 @@ function setFormOptions(data) {
 		//console.log(options[option]);
 		htmlString += "<option value=\"'" + options[option] + "'\">" + options[option] + "</option>\n";
 	}
-	//document.getElementById("sel_weather").innerHTML = htmlString;
+	document.getElementById("sel_weather").innerHTML = htmlString;
 	//console.log(htmlString);
 
 	// Light_Conditions
@@ -39,7 +39,7 @@ function setFormOptions(data) {
 	for (option in options) {
 		htmlString += "<option value=" + options[option] + ">" + options[option] + "</option>\n";
 	}
-	//document.getElementById("sel_light").innerHTML = htmlString;
+	document.getElementById("sel_light").innerHTML = htmlString;
     //console.log(htmlString);
 
 	// Road_Surface_Conditions
@@ -48,8 +48,9 @@ function setFormOptions(data) {
 	for (option in options) {
 		htmlString += "<option value=" + options[option] + ">" + options[option] + "</option>\n";
 	}
-	//document.getElementById("sel_road").innerHTML = htmlString;
+	document.getElementById("sel_road").innerHTML = htmlString;
     //console.log(htmlString);
+
 /*	// Scatter Plot x
 	htmlString = "";
 	options = Object.keys(data[1]);
