@@ -17,25 +17,16 @@ function getOccurencies(data, prop) {
 	return occ;
 }
 
-// Sets function to call when values change for scatter plot axes.
-//function configScatterFunc() {
-
-	
-//}
-
 function setFormOptions(data) {
 	var htmlString = "";
 	var options = [];
 	
 	// Weather_Conditions
 	var options = getOccurencies(data, "Weather_Conditions");
-	//console.log(options);
 	for (option in options) {
-		//console.log(options[option]);
 		htmlString += "<option value=\"'" + options[option] + "'\">" + options[option] + "</option>\n";
 	}
 	document.getElementById("sel_weather").innerHTML = htmlString;
-	//console.log(htmlString);
 
 	// Light_Conditions
 	htmlString = "";
@@ -44,7 +35,6 @@ function setFormOptions(data) {
 		htmlString += "<option value=" + options[option] + ">" + options[option] + "</option>\n";
 	}
 	document.getElementById("sel_light").innerHTML = htmlString;
-    //console.log(htmlString);
 
 	// Road_Surface_Conditions
 	htmlString = "";
@@ -53,7 +43,6 @@ function setFormOptions(data) {
 		htmlString += "<option value=" + options[option] + ">" + options[option] + "</option>\n";
 	}
 	document.getElementById("sel_road").innerHTML = htmlString;
-    //console.log(htmlString);
 
 /*	// Scatter Plot x
 	htmlString = "";
