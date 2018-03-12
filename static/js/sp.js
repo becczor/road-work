@@ -26,20 +26,11 @@ function sp(data){
     var x = d3.scaleLinear().range([0, width]);
     var y = d3.scaleLinear().range([height, 0]);
 
+    var radius = 'Accident_Severity';
+
     // Define axes from scaled variables
     var xAxis = d3.axisBottom(x);
     var yAxis = d3.axisLeft(y);
-
-    /* Task 2
-      Initialize 4 (x,y,country,circle-size)
-      variables and assign different data attributes from the data filter
-      Then use domain() and extent to scale the axes*/
-   // var xValue = 'Day_of_Week';
-    //var yValue = 'Speed_limit';
-   // var yValue = 'Local_Authority_(District)';
-
-    var radius = 'Accident_Severity';
-
 
     var cValue = function(d) { return d.Accident_Index;};
     var color = d3.scaleOrdinal(d3.schemeCategory20b);
@@ -50,69 +41,94 @@ function sp(data){
         .append("g")
         .attr("transform","translate(" + margin.left + "," + margin.top + ")");
 
-    var circles = svg.selectAll("circles")
-            .data(data);
 
+    var xValue = document.getElementById('sel_x').value;
+    var yValue = document.getElementById('sel_y').value;
+
+    /*x and y domain code here, based on values from data*/
+    x.domain(d3.extent(data, function(d){return d[xValue];})).nice();
+    y.domain(d3.extent(data, function(d){return d[yValue];})).nice();
+    console.log(x.domain());
+    console.log(y.domain());
+
+    // Add the axes
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform","translate(" + 0 + "," + height + ")")
+        .call(xAxis);
+
+    svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis);
+
+    // The enter function creates placeholders for missing objects that we are about to create
+    var circles = svg.selectAll("circles")
+        .data(data)
+
+        .enter().append("circle")
+        .attr("class", "circles")
+        .attr("r", function(d){
+            return d[radius]*3;
+        })
+
+        .attr("cx", function(d){
+            return x(d[xValue]);}
+        )
+        .attr("cy", function(d){
+            return y(d[yValue]);}
+        )
+
+        .style("fill", function(d) { return color(cValue(d));})
+        // Make circles non_brushed from beginning
+        .attr("class", "non_brushed");
+
+    // Create a 2D brush and set event listener (what is going to happen in case of an event)
+    var brush = d3.brush()
+        .on("brush", highlightBrushedCircles);
+
+    svg.append("g")
+        .attr("class", "brush")
+        .call(brush);
 
     function updateScatterAxis() {
         console.log("in update now");
-
-        var xValue = document.getElementById('sel_x').value;
-        var yValue = document.getElementById('sel_y').value;
+        xValue = document.getElementById('sel_x').value;
+        yValue = document.getElementById('sel_y').value;
 
         /*x and y domain code here, based on values from data*/
         x.domain(d3.extent(data, function(d){return d[xValue];})).nice();
         y.domain(d3.extent(data, function(d){return d[yValue];})).nice();
+        console.log(x.domain());
+        console.log(y.domain());
 
-        
-
-        /* ~~ Task 3 Add the x and y Axis ~~ */
-
-        svg.append("g")
-            .attr("class", "axis")
-            .attr("transform","translate(" + 0 + "," + height + ")")
-            .call(xAxis);
-
-        svg.append("g")
-            .attr("class", "axis")
-            .call(yAxis);
-
-
-        /* ~~ Task 4 Add the scatter dots. ~~ */
 
         // The enter function creates placeholders for missing objects that we are about to create
+        // Make the changes
 
-        circles.enter().append("circle")
-            .attr("class", "circles")
+
+        svg.selectAll("circle")
+            .data(data) // Update with new data
+            .transition()
+            .duration(1000)
             .attr("r", function(d){
                 return d[radius]*3;
             })
-
             .attr("cx", function(d){
-                return x(d[xValue]);}
-            )
+                return x(d[xValue]);
+            })
             .attr("cy", function(d){
-                return y(d[yValue]);}
-            )
+                return y(d[yValue]);
+            });
 
-            .style("fill", function(d) { return color(cValue(d));})
+        svg.select(".x axis") // change the x axis
+            .transition()
+            .duration(750)
+            .call(xAxis);
 
-            /* ~~ Task 5 create the brush variable and call highlightBrushedCircles() ~~ */
-
-            // Make circles non_brushed from beginning
-            .attr("class", "non_brushed");
-
-        // Create a 2D brush and set event listener (what is going to happen in case of an event)
-        var brush = d3.brush()
-            .on("brush", highlightBrushedCircles);
-
-
-        // QUESTION: How can we apply the class brush to the svg?
-        // Does it have to do with the fact that we call the brush afterwards?
-        // What does the call function do exactly?
-        svg.append("g")
-            .attr("class", "brush")
-            .call(brush);
+        svg.select(".y axis") // change the y axis
+            .transition()
+            .duration(750)
+            .call(yAxis);
 
     }
 
@@ -123,8 +139,6 @@ function sp(data){
     document.getElementById('sel_y').onchange = function() {
         updateScatterAxis();
     }
-
-    updateScatterAxis();
 
     //highlightBrushedCircles function
     function highlightBrushedCircles() {
