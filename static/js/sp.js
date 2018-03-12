@@ -48,8 +48,6 @@ function sp(data){
     /*x and y domain code here, based on values from data*/
     x.domain(d3.extent(data, function(d){return d[xValue];})).nice();
     y.domain(d3.extent(data, function(d){return d[yValue];})).nice();
-    console.log(x.domain());
-    console.log(y.domain());
 
     // Add the axes
     svg.append("g")
@@ -98,9 +96,6 @@ function sp(data){
         /*x and y domain code here, based on values from data*/
         x.domain(d3.extent(data, function(d){return d[xValue];})).nice();
         y.domain(d3.extent(data, function(d){return d[yValue];})).nice();
-        console.log(x.domain());
-        console.log(y.domain());
-
 
         // The enter function creates placeholders for missing objects that we are about to create
         // Make the changes
@@ -120,12 +115,12 @@ function sp(data){
                 return y(d[yValue]);
             });
 
-        svg.select(".x axis") // change the x axis
+        svg.select(".x.axis") // change the x axis
             .transition()
             .duration(750)
             .call(xAxis);
 
-        svg.select(".y axis") // change the y axis
+        svg.select(".y.axis") // change the y axis
             .transition()
             .duration(750)
             .call(yAxis);
