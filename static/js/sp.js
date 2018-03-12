@@ -26,6 +26,10 @@ function sp(data){
     var x = d3.scaleLinear().range([0, width]);
     var y = d3.scaleLinear().range([height, 0]);
 
+    // Define axes from scaled variables
+    var xAxis = d3.axisBottom(x);
+    var yAxis = d3.axisLeft(y);
+
     /* Task 2
       Initialize 4 (x,y,country,circle-size)
       variables and assign different data attributes from the data filter
@@ -34,32 +38,11 @@ function sp(data){
     //var yValue = 'Speed_limit';
    // var yValue = 'Local_Authority_(District)';
 
-    var xValue = document.getElementById('sel_x').value;
-    var yValue = document.getElementById('sel_y').value;
-
-    //console.log("x:");
-    //console.log(testX);
-    //var yValue = document.getElementById('yval-btn').value;
-    //console.log("y:");
-    //console.log(yValue);
-
     var radius = 'Accident_Severity';
 
 
-    /*x and y domain code here, based on values from data*/
-    x.domain(d3.extent(data, function(d){return d[xValue];})).nice();
-    y.domain(d3.extent(data, function(d){return d[yValue];})).nice();
-
-    // QUESTION: How do we know that we can apply extent on data, since it is an object and not an array?
-    // https://github.com/d3/d3-array/blob/master/README.md#extent
-
-    // Define axes from scaled variables
-    var xAxis = d3.axisBottom(x);
-    var yAxis = d3.axisLeft(y);
-
     var cValue = function(d) { return d.Accident_Index;};
     var color = d3.scaleOrdinal(d3.schemeCategory20b);
-
 
     var svg = d3.select(div).append("svg")
         .attr("width", width + margin.left + margin.right)
@@ -67,66 +50,81 @@ function sp(data){
         .append("g")
         .attr("transform","translate(" + margin.left + "," + margin.top + ")");
 
-    /* ~~ Task 3 Add the x and y Axis and title  ~~ */
-
-    svg.append("g")
-        .attr("class", "axis")
-        .attr("transform","translate(" + 0 + "," + height + ")")
-        .call(xAxis);
-
-  //  svg.append("text")
-  //      .attr("class", "label")
-  //      .attr("transform", "translate(" + (width/2) + " ," + (height + margin.top + 20) + ")")
-  //      .style("text-anchor", "middle")
-  //      .text("Day of week");
-
-    svg.append("g")
-        .attr("class", "axis")
-        .call(yAxis);
-
-   // svg.append("text")
-   //     .attr("class", "label")
-   //     .style("text-anchor", "start")
-   //     .text("1st Road Number");
-
-    /* ~~ Task 4 Add the scatter dots. ~~ */
-
-    // The enter function creates placeholders for missing objects that we are about to create
-
     var circles = svg.selectAll("circles")
-        .data(data)
-
-        .enter().append("circle")
-        .attr("class", "circles")
-        .attr("r", function(d){
-            return d[radius]*3;
-        })
-
-        .attr("cx", function(d){
-            return x(d[xValue]);}
-        )
-        .attr("cy", function(d){
-            return y(d[yValue]);}
-        )
-
-        .style("fill", function(d) { return color(cValue(d));})
-
-        /* ~~ Task 5 create the brush variable and call highlightBrushedCircles() ~~ */
-
-        // Make circles non_brushed from beginning
-        .attr("class", "non_brushed");
-
-    // Create a 2D brush and set event listener (what is going to happen in case of an event)
-    var brush = d3.brush()
-        .on("brush", highlightBrushedCircles);
+            .data(data);
 
 
-    // QUESTION: How can we apply the class brush to the svg?
-    // Does it have to do with the fact that we call the brush afterwards?
-    // What does the call function do exactly?
-    svg.append("g")
-        .attr("class", "brush")
-        .call(brush);
+    function updateScatterAxis() {
+        console.log("in update now");
+
+        var xValue = document.getElementById('sel_x').value;
+        var yValue = document.getElementById('sel_y').value;
+
+        /*x and y domain code here, based on values from data*/
+        x.domain(d3.extent(data, function(d){return d[xValue];})).nice();
+        y.domain(d3.extent(data, function(d){return d[yValue];})).nice();
+
+        
+
+        /* ~~ Task 3 Add the x and y Axis ~~ */
+
+        svg.append("g")
+            .attr("class", "axis")
+            .attr("transform","translate(" + 0 + "," + height + ")")
+            .call(xAxis);
+
+        svg.append("g")
+            .attr("class", "axis")
+            .call(yAxis);
+
+
+        /* ~~ Task 4 Add the scatter dots. ~~ */
+
+        // The enter function creates placeholders for missing objects that we are about to create
+
+        circles.enter().append("circle")
+            .attr("class", "circles")
+            .attr("r", function(d){
+                return d[radius]*3;
+            })
+
+            .attr("cx", function(d){
+                return x(d[xValue]);}
+            )
+            .attr("cy", function(d){
+                return y(d[yValue]);}
+            )
+
+            .style("fill", function(d) { return color(cValue(d));})
+
+            /* ~~ Task 5 create the brush variable and call highlightBrushedCircles() ~~ */
+
+            // Make circles non_brushed from beginning
+            .attr("class", "non_brushed");
+
+        // Create a 2D brush and set event listener (what is going to happen in case of an event)
+        var brush = d3.brush()
+            .on("brush", highlightBrushedCircles);
+
+
+        // QUESTION: How can we apply the class brush to the svg?
+        // Does it have to do with the fact that we call the brush afterwards?
+        // What does the call function do exactly?
+        svg.append("g")
+            .attr("class", "brush")
+            .call(brush);
+
+    }
+
+    // Sets function to call when values change for scatter plot axes.
+    document.getElementById('sel_x').onchange = function() {
+        updateScatterAxis();
+    }
+    document.getElementById('sel_y').onchange = function() {
+        updateScatterAxis();
+    }
+
+    updateScatterAxis();
 
     //highlightBrushedCircles function
     function highlightBrushedCircles() {

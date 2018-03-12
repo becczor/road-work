@@ -17,7 +17,11 @@ function getOccurencies(data, prop) {
 	return occ;
 }
 
+// Sets function to call when values change for scatter plot axes.
+//function configScatterFunc() {
 
+	
+//}
 
 function setFormOptions(data) {
 	var htmlString = "";
@@ -74,6 +78,7 @@ function draw(error, data, area_map_json){
     if (error) throw error;
 
     setFormOptions(data);
+    //configScatterFunc();
 
     sp = new sp(data);
     map = new map(data, area_map_json);
