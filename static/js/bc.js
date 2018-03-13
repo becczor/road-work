@@ -67,20 +67,16 @@ function bc(data){
         .data(Object.entries(counted_data))
         .enter().append("rect")
         .attr("class", "bar")
-
         .attr("x", function(d) {
         	return x(d[0]); // d[0] is key of each entry
         })
-
         .attr("width", x.bandwidth())
-
         .attr("y", function(d){
             return y(d[1]);
         })
         .attr("height", function(d) {
         	return height - y(d[1]); // d[1] is value of each entry
         })
-
         .style("fill", "steelblue");
 
     function updateBarChart() {
@@ -93,7 +89,7 @@ function bc(data){
         x.domain(Object.keys(counted_data));
         y.domain([0,d3.max(Object.values(counted_data))]);
 
-        // Now, update the bars! First, remove old bars
+        // Now, update the bars! First, remove old bars: https://bl.ocks.org/syncopika/f1c9036b0deb058454f825238a95b6be
         var bars = svg.selectAll(".bar")
             .remove()
             .exit()
@@ -102,20 +98,16 @@ function bc(data){
         // Add the new bars, to make sure we get the right number of bars
         bars.enter().append("rect")
             .attr("class", "bar")
-
             .attr("x", function(d) {
                 return x(d[0]); // d[0] is key of each entry
             })
-
             .attr("width", x.bandwidth())
-
             .attr("y", function(d){
                 return y(d[1]);
             })
             .attr("height", function(d) {
                 return height - y(d[1]); // d[1] is value of each entry
             })
-
             .style("fill", "steelblue");
 
         // And make sure the axes is updated aswell
