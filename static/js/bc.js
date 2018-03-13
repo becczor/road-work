@@ -13,12 +13,9 @@ function bc(data){
 	//https://bl.ocks.org/d3noob/bdf28027e0ce70bd132edc64f1dd7ea4
 	//http://bl.ocks.org/sjengle/e8c0d6abc0a8d52d4b11#chart.js
 
-    //console.log(data);
-
     this.data = data;
-    var sortBy = document.getElementById('sel_bc').value;
-   // var counted_data = countOccurencies(data, "Day_of_Week");
-    var counted_data = countOccurencies(data, sortBy);
+    var countBy = document.getElementById('sel_bc').value;
+    var counted_data = countOccurencies(data, countBy);
     var div = '#bar-chart';
 
     var height = 500;
@@ -27,7 +24,8 @@ function bc(data){
         width = parentWidth - margin.right - margin.left,
         height = height - margin.top - margin.bottom;
 
-    //var color = d3.scaleOrdinal(d3.schemeCategory20);
+    /*var cValue = function(d) { return d.Accident_Index;};
+    var color = d3.scaleOrdinal(d3.schemeCategory20b);*/
 
     var tooltip = d3.select(div).append("div")
         .attr("class", "tooltip")
@@ -39,27 +37,13 @@ function bc(data){
           .padding(0.1);
     var y = d3.scaleLinear().range([height, 0]);
 
-    /* Task 2
-      Initialize 4 (x,y,country,circle-size)
-      variables and assign different data attributes from the data filter
-      Then use domain() and extent to scale the axes*/
-    /*var xValue = 'Day_of_Week';
-    var yValue = 'Local_Authority_(District)';
-    var radius = 'Accident_Severity';*/
-
-    /*x and y domain code here, based on values from data*/
+    // x and y domain code here, based on values from data
     x.domain(Object.keys(counted_data));
 	y.domain([0,d3.max(Object.values(counted_data))]);
-
-    // QUESTION: How do we know that we can apply extent on data, since it is an object and not an array?
-    // https://github.com/d3/d3-array/blob/master/README.md#extent
 
     // Define axes from scaled variables
     var xAxis = d3.axisBottom(x);
     var yAxis = d3.axisLeft(y);
-
-    /*var cValue = function(d) { return d.Accident_Index;};
-    var color = d3.scaleOrdinal(d3.schemeCategory20b);*/
 
     // append the svg object to the div
     var svg = d3.select(div).append("svg")
@@ -68,35 +52,19 @@ function bc(data){
         .append("g")
         .attr("transform","translate(" + margin.left + "," + margin.top + ")");
 
-    /* ~~ Task 3 Add the x and y Axis and title  ~~ */
-
+    // Add the axes and place them correctly
     svg.append("g")
-        .attr("class", "axis")
+        .attr("class", "x axis")
         .attr("transform","translate(" + 0 + "," + height + ")")
         .call(xAxis);
 
-    /*svg.append("text")
-        .attr("class", "label")
-        .attr("transform", "translate(" + (width/2) + " ," + (height + margin.top + 20) + ")")
-        .style("text-anchor", "middle")
-        .text("Day of week");*/
-
     svg.append("g")
-        .attr("class", "axis")
+        .attr("class", "y axis")
         .call(yAxis);
 
-    /*svg.append("text")
-        .attr("class", "label")
-        .style("text-anchor", "start")
-        .text("1st Road Number");*/
-
-    /* ~~ Task 4 Add the scatter dots. ~~ */
-
-    // The enter function creates placeholders for missing objects that we are about to create
 
     var bars = svg.selectAll(".bar")
         .data(Object.entries(counted_data))
-
         .enter().append("rect")
         .attr("class", "bar")
 
@@ -115,69 +83,56 @@ function bc(data){
 
         .style("fill", "steelblue");
 
-        /* ~~ Task 5 create the brush variable and call highlightBrushedCircles() ~~ */
+    function updateBarChart() {
 
-        // Make circles non_brushed from beginning
-        //.attr("class", "non_brushed");
+        // Update the data
+        countBy = document.getElementById('sel_bc').value;
+        counted_data = countOccurencies(data, countBy);
 
-    // Create a 2D brush and set event listener (what is going to happen in case of an event)
-    /*var brush = d3.brush()
-        .on("brush", highlightBrushedCircles);
+        // Updated domain is needed
+        x.domain(Object.keys(counted_data));
+        y.domain([0,d3.max(Object.values(counted_data))]);
 
+        // Now, update the bars! First, remove old bars
+        var bars = svg.selectAll(".bar")
+            .remove()
+            .exit()
+            .data(Object.entries(counted_data));
 
-    // QUESTION: How can we apply the class brush to the svg?
-    // Does it have to do with the fact that we call the brush afterwards?
-    // What does the call function do exactly?
-    svg.append("g")
-        .attr("class", "brush")
-        .call(brush);
+        // Add the new bars, to make sure we get the right number of bars
+        bars.enter().append("rect")
+            .attr("class", "bar")
 
-    //highlightBrushedCircles function
-    function highlightBrushedCircles() {
-        if (d3.event.selection != null) {
-            // revert circles to initial style
-            circles.attr("class", "non_brushed");
-            var brush_coords = d3.brushSelection(this);
-            // style brushed circles
-            circles.filter(function (){
-                var cx = d3.select(this).attr("cx");
-                var cy = d3.select(this).attr("cy");
-                return isBrushed(brush_coords, cx, cy);
+            .attr("x", function(d) {
+                return x(d[0]); // d[0] is key of each entry
             })
-                .attr("class", "brushed");
-            var d_brushed =  d3.selectAll(".brushed").data();
 
+            .attr("width", x.bandwidth())
 
-            /* ~~~ Call pc or/and map function to filter ~~~ 
+            .attr("y", function(d){
+                return y(d[1]);
+            })
+            .attr("height", function(d) {
+                return height - y(d[1]); // d[1] is value of each entry
+            })
 
-        }
-    }//highlightBrushedCircles
-    function isBrushed(brush_coords, cx, cy) {
-        var x0 = brush_coords[0][0],
-            x1 = brush_coords[1][0],
-            y0 = brush_coords[0][1],
-            y1 = brush_coords[1][1];
-        return x0 <= cx && cx <= x1 && y0 <= cy && cy <= y1;
-    }//isBrushed
+            .style("fill", "steelblue");
 
+        // And make sure the axes is updated aswell
+        svg.select(".x.axis") // change the x axis
+            .transition()
+            .duration(500)
+            .call(xAxis);
 
+        svg.select(".y.axis") // change the y axis
+            .transition()
+            .duration(500)
+            .call(yAxis);
+    }
 
-    //Select all the dots filtered
-    this.selectDots = function(value){
-        // here you can take all the nodes and set them as unbrushed before they are stroked
-        var dots = d3.selectAll(".non_brushed");
+    // Sets function to call when property for bar chart changes
+    document.getElementById('sel_bc').onchange = function() {
+        updateBarChart();
+    }
 
-        dots.style("stroke", function(d){
-            return value.every(function(c) {
-                return c.Accident_Index != d.Accident_Index ? "black" : null;
-            } ) ? null : "black";
-        } )
-            .style("stroke-width", 7)
-        ;
-
-
-
-    };*/
-
-
-} //End
+}

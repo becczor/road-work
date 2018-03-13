@@ -1,8 +1,3 @@
-/*
-  Created: Jan 14 2018
-  Author: Kahin Akram Hassan
-*/
-
 function sp(data){
 
     //console.log(data);
@@ -45,7 +40,7 @@ function sp(data){
     var xValue = document.getElementById('sel_x').value;
     var yValue = document.getElementById('sel_y').value;
 
-    /*x and y domain code here, based on values from data*/
+    // x and y domain code here, based on values from data
     x.domain(d3.extent(data, function(d){return d[xValue];})).nice();
     y.domain(d3.extent(data, function(d){return d[yValue];})).nice();
 
@@ -59,7 +54,7 @@ function sp(data){
         .attr("class", "y axis")
         .call(yAxis);
 
-    // The enter function creates placeholders for missing objects that we are about to create
+    // Add circles with data to the plot
     var circles = svg.selectAll("circles")
         .data(data)
 
@@ -80,7 +75,6 @@ function sp(data){
         // Make circles non_brushed from beginning
         .attr("class", "non_brushed");
 
-    // Create a 2D brush and set event listener (what is going to happen in case of an event)
     var brush = d3.brush()
         .on("brush", highlightBrushedCircles);
 
@@ -89,22 +83,18 @@ function sp(data){
         .call(brush);
 
     function updateScatterAxis() {
-        console.log("in update now");
         xValue = document.getElementById('sel_x').value;
         yValue = document.getElementById('sel_y').value;
 
-        /*x and y domain code here, based on values from data*/
+        // x and y domain code here, based on values from data
         x.domain(d3.extent(data, function(d){return d[xValue];})).nice();
         y.domain(d3.extent(data, function(d){return d[yValue];})).nice();
 
-        // The enter function creates placeholders for missing objects that we are about to create
         // Make the changes
-
-
         svg.selectAll("circle")
             .data(data) // Update with new data
             .transition()
-            .duration(1000)
+            .duration(500)
             .attr("r", function(d){
                 return d[radius]*3;
             })
@@ -117,14 +107,13 @@ function sp(data){
 
         svg.select(".x.axis") // change the x axis
             .transition()
-            .duration(750)
+            .duration(500)
             .call(xAxis);
 
         svg.select(".y.axis") // change the y axis
             .transition()
-            .duration(750)
+            .duration(500)
             .call(yAxis);
-
     }
 
     // Sets function to call when values change for scatter plot axes.
@@ -135,7 +124,7 @@ function sp(data){
         updateScatterAxis();
     }
 
-    //highlightBrushedCircles function
+    
     function highlightBrushedCircles() {
         if (d3.event.selection != null) {
             // revert circles to initial style
@@ -150,24 +139,24 @@ function sp(data){
                 .attr("class", "brushed");
             var d_brushed =  d3.selectAll(".brushed").data();
 
-
-            /* ~~~ Call pc or/and map function to filter ~~~ */
+            // Call functions here for connecting sp to map and bc
 
         }
-    }//highlightBrushedCircles
+    }
+
     function isBrushed(brush_coords, cx, cy) {
         var x0 = brush_coords[0][0],
             x1 = brush_coords[1][0],
             y0 = brush_coords[0][1],
             y1 = brush_coords[1][1];
         return x0 <= cx && cx <= x1 && y0 <= cy && cy <= y1;
-    }//isBrushed
+    }
 
 
 
     //Select all the dots filtered
     this.selectDots = function(value){
-        // here you can take all the nodes and set them as unbrushed before they are stroked
+        // take all the nodes and set them as unbrushed before they are stroked
         var dots = d3.selectAll(".non_brushed");
 
         dots.style("stroke", function(d){
@@ -183,4 +172,4 @@ function sp(data){
     };
 
 
-}//End
+}
