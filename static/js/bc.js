@@ -1,4 +1,3 @@
-
 // Counts all occurencies of values for a given property. Returns object with the values and its count.
 function countOccurencies(data, prop) {
 	var counted = {};
@@ -23,9 +22,6 @@ function bc(data){
     var margin = {top: 20, right: 20, bottom: 60, left: 40},
         width = parentWidth - margin.right - margin.left,
         height = height - margin.top - margin.bottom;
-
-    /*var cValue = function(d) { return d.Accident_Index;};
-    var color = d3.scaleOrdinal(d3.schemeCategory20b);*/
 
     var tooltip = d3.select(div).append("div")
         .attr("class", "tooltip")
