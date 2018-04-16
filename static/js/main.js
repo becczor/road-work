@@ -8,7 +8,7 @@ var sp, map, bc;
 // Gets all unique values for a given property. Returns a list of all unique values.
 function getOccurencies(data, prop) {
 	var occ = [];
-	//console.log(data);
+
 	data.forEach(function(d) {
 		if (!occ.includes(d[prop])) {
 			occ.push(d[prop]);
@@ -44,30 +44,12 @@ function setFormOptions(data) {
 	}
 	document.getElementById("sel_road").innerHTML = htmlString;
 
-/*	// Scatter Plot x
-	htmlString = "";
-	options = Object.keys(data[1]);
-	for(option in options){
-		htmlString += "<option value=" + options[option] + ">" + options[option] + "</option>\n";
-	}
-    document.getElementById("sel_x").innerHTML = htmlString;
-
-	// Scatter Plot y
-    htmlString = "";
-    options = Object.keys(data[1]);
-    for(option in options){
-        htmlString += "<option value=" + options[option] + ">" + options[option] + "</option>\n";
-    }
-    document.getElementById("sel_y").innerHTML = htmlString;*/
-
-
 }
 
 function draw(error, data, area_map_json){
     if (error) throw error;
 
     setFormOptions(data);
-    //configScatterFunc();
 
     sp = new sp(data);
     map = new map(data, area_map_json);

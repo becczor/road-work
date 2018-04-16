@@ -1,7 +1,5 @@
 function sp(data){
 
-    //console.log(data);
-
     this.data = data;
     var div = '#scatter-plot';
 
@@ -139,8 +137,6 @@ function sp(data){
                 .attr("class", "brushed");
             var d_brushed =  d3.selectAll(".brushed").data();
 
-            // Call functions here for connecting sp to map and bc
-
         }
     }
 
@@ -151,8 +147,6 @@ function sp(data){
             y1 = brush_coords[1][1];
         return x0 <= cx && cx <= x1 && y0 <= cy && cy <= y1;
     }
-
-
 
     //Select all the dots filtered
     this.selectDots = function(value){
@@ -166,8 +160,6 @@ function sp(data){
         } )
             .style("stroke-width", 7)
         ;
-
-
 
     };
 
